@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bing Search Proxy</title>
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; }
+        iframe { width: 100vw; height: 100vh; border: none; }
+    </style>
+</head>
+<body>
+    <iframe id="searchFrame"></iframe>
+
+    <script>
+        // Get query from URL
+        const params = new URLSearchParams(window.location.search);
+        const query = params.get("q");
+
+        if (query) {
+            document.getElementById("searchFrame").src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+        }
+
+        // Force all links to open in the iframe
+        document.addEventListener("DOMContentLoaded", function () {
+            const iframe = document.getElementById("searchFrame");
+
+            setInterval(() => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const links = iframeDoc.querySelectorAll("a");
+
+                    links.forEach(link => {
+                        link.target = "_self"; // Ensure all links open in the iframe
+                        link.addEventListener("click", function (event) {
+                            event.preventDefault();
+                            iframe.src = link.href;
+                        });
+                    });
+
+                    console.log("Intercepted Bing links to keep them in the iframe.");
+                } catch (error) {
+                    console.error("Could not modify Bing links due to security restrictions.");
+                }
+            }, 2000);
+        });
+    </script>
+</body>
+</html>
