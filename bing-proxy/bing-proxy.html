@@ -18,7 +18,7 @@
         const query = params.get("q");
 
         if (query) {
-            document.getElementById("searchFrame").src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+            document.getElementById("searchFrame").src = `https://duckduckgo.com/?q=${encodeURIComponent(query)}`;
         } else {
             document.getElementById("searchFrame").src = "https://www.bing.com";
         }
