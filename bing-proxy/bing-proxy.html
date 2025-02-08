@@ -19,6 +19,8 @@
 
         if (query) {
             document.getElementById("searchFrame").src = `https://www.bing.com/search?q=${encodeURIComponent(query)}`;
+        } else {
+            document.getElementById("searchFrame").src = "https://www.bing.com";
         }
 
         // Force all links to open in the iframe
